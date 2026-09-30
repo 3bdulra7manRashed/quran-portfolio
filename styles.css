@@ -2616,3 +2616,401 @@ img {
   font-size: 0.8rem;
   font-weight: bold;
 }
+
+
+/* ==========================================================================
+   Phase 1-12 Final Polish Additions:
+   Portfolio Hierarchy, 5 Core Services, Why Work With Me, Inline CTAs
+   ========================================================================== */
+
+/* Portfolio Hierarchy Headers */
+.portfolio-group-header {
+  margin: 2.5rem 0 1.5rem;
+  text-align: right;
+  direction: rtl;
+}
+
+.portfolio-group-header.secondary-group {
+  margin-top: 4.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px dashed var(--border-subtle);
+}
+
+.portfolio-group-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #b08927;
+  background: rgba(176, 137, 39, 0.12);
+  border: 1px solid rgba(176, 137, 39, 0.3);
+  padding: 0.25rem 0.85rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 0.5rem;
+}
+
+[data-theme="dark"] .portfolio-group-badge {
+  color: var(--gold-light);
+  background: rgba(212, 175, 55, 0.15);
+  border-color: rgba(212, 175, 55, 0.35);
+}
+
+.portfolio-group-title {
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.35rem;
+}
+
+.portfolio-group-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.featured-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.standard-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.75rem;
+}
+
+/* Featured Project Card Emphasis */
+.project-card.is-featured {
+  border: 1.5px solid rgba(176, 137, 39, 0.35);
+  box-shadow: 0 12px 35px rgba(176, 137, 39, 0.08);
+}
+
+[data-theme="dark"] .project-card.is-featured {
+  border-color: rgba(212, 175, 55, 0.3);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+}
+
+.project-card.is-featured:hover {
+  border-color: var(--gold-primary);
+  box-shadow: 0 18px 45px rgba(176, 137, 39, 0.18);
+}
+
+.badge-featured {
+  background: linear-gradient(135deg, rgba(176, 137, 39, 0.2), rgba(176, 137, 39, 0.08));
+  color: var(--gold-primary);
+  border: 1px solid rgba(176, 137, 39, 0.35);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .badge-featured {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.1));
+  color: var(--gold-light);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+/* Inline Conversion CTAs */
+.inline-cta-banner {
+  margin: 3.5rem 0 1.5rem;
+  background: var(--bg-card);
+  border: 1.5px solid rgba(176, 137, 39, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 1.85rem 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  box-shadow: 0 10px 30px rgba(40, 30, 15, 0.05);
+  direction: rtl;
+  text-align: right;
+  transition: all 0.3s ease;
+}
+
+.inline-cta-banner:hover {
+  border-color: var(--gold-primary);
+  box-shadow: 0 14px 38px rgba(176, 137, 39, 0.12);
+}
+
+[data-theme="dark"] .inline-cta-banner {
+  background: rgba(19, 26, 31, 0.95);
+  border-color: rgba(212, 175, 55, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.inline-cta-content {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.inline-cta-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.inline-cta-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
+}
+
+.inline-cta-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .inline-cta-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.75rem 1.5rem;
+  }
+  .inline-cta-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  .inline-cta-banner .btn {
+    width: 100%;
+  }
+}
+
+/* Services Grid (5 Core Services) */
+.services-section {
+  padding: 6rem 0;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.service-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem 1.85rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-sm);
+  direction: rtl;
+  text-align: right;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-md), 0 0 25px rgba(176, 137, 39, 0.08);
+}
+
+.service-icon-wrap {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-md);
+  background: rgba(176, 137, 39, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid rgba(176, 137, 39, 0.2);
+}
+
+[data-theme="dark"] .service-icon-wrap {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.service-title {
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.65rem;
+  line-height: 1.35;
+}
+
+.service-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  flex-grow: 1;
+  margin-bottom: 1.25rem;
+}
+
+.service-features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 1rem;
+}
+
+.service-features-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+}
+
+.service-features-list li::before {
+  content: '•';
+  color: var(--gold-primary);
+  font-weight: bold;
+}
+
+/* Why Work With Me (3 Pillars) */
+.why-section {
+  padding: 6rem 0;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.why-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  direction: rtl;
+  text-align: right;
+}
+
+.why-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-md);
+}
+
+.why-num {
+  font-family: var(--font-latin);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: rgba(176, 137, 39, 0.3);
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.why-card:hover .why-num {
+  color: var(--gold-primary);
+}
+
+.why-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.75rem;
+}
+
+.why-desc {
+  font-size: 0.94rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+
+/* Packages Section wrapper */
+.packages-section {
+  padding: 6rem 0;
+}
+
+/* Equran Case Study Detailed Role Tags & Showcase */
+.casestudy-role-box {
+  margin: 1.75rem 0 2.5rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: var(--radius-md);
+  text-align: right;
+  direction: rtl;
+}
+
+[data-theme="dark"] .casestudy-role-box {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.casestudy-role-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #0b683e;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+[data-theme="dark"] .casestudy-role-label {
+  color: #34d399;
+}
+
+.casestudy-role-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.casestudy-role-tag {
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: var(--text-main);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 480px) {
+  .hero-actions {
+    width: 100%;
+  }
+  .hero-actions .btn {
+    width: 100%;
+  }
+  .featured-projects-grid,
+  .standard-projects-grid,
+  .services-grid,
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+  .filter-tabs {
+    gap: 0.4rem;
+  }
+  .tab-btn {
+    padding: 0.5rem 0.95rem;
+    font-size: 0.84rem;
+  }
+  .proof-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .proof-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-title {
+    font-size: 1.65rem;
+  }
+}

@@ -1,6 +1,6 @@
 /**
  * عبدالرحمن راشد - مونتاج التلاوات القرآنية
- * Application Logic & Anti-Bot Protection Shield
+ * Application Logic & Conversion Tracking & Anti-Bot Protection Shield
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -41,30 +41,32 @@ const SECURE_VAULT = {
 };
 
 function initSecureContact() {
-  // 1. WhatsApp Triggers (General)
+  // 1. WhatsApp Triggers (General & CTAs)
   const waTriggers = document.querySelectorAll('.secure-wa-trigger');
   waTriggers.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const phone = SECURE_VAULT.getPhone();
+      const ctaSource = btn.getAttribute('data-cta') || btn.id || 'general';
       const msg = "السلام عليكم ورحمة الله وبركاته، أخي عبدالرحمن، اطلعت على معرض أعمالك وأود الاستفسار عن خدمة مونتاج التلاوات القرآنية.";
       const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
       window.open(url, '_blank', 'noopener,noreferrer');
-      trackEvent('secure_whatsapp_opened', { source: btn.id || 'general' });
+      trackEvent('whatsapp_click', { source: ctaSource });
     });
   });
 
-  // 2. WhatsApp Triggers (Specific Package)
+  // 2. WhatsApp Triggers (Specific Packages)
   const pkgTriggers = document.querySelectorAll('.secure-wa-pkg');
   pkgTriggers.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const phone = SECURE_VAULT.getPhone();
       const pkgName = btn.getAttribute('data-pkg') || 'باقة شهرية';
+      const ctaSource = btn.getAttribute('data-cta') || 'package_btn';
       const msg = `السلام عليكم ورحمة الله وبركاته، أخي عبدالرحمن، أود الاستفسار عن تفاصيل والاشتراك في [${pkgName}].`;
       const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
       window.open(url, '_blank', 'noopener,noreferrer');
-      trackEvent('secure_package_inquiry', { package: pkgName });
+      trackEvent('whatsapp_package_click', { package: pkgName, source: ctaSource });
     });
   });
 
@@ -74,11 +76,12 @@ function initSecureContact() {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const email = SECURE_VAULT.getEmail();
+      const ctaSource = btn.getAttribute('data-cta') || 'email_btn';
       const subject = "طلب مونتاج تلاوات قرآنية / استفسار";
       const body = "السلام عليكم ورحمة الله وبركاته أخي عبدالرحمن،\n\nأود التواصل معك بخصوص مونتاج تلاوات قرآنية...\n";
       const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       window.location.href = mailtoUrl;
-      trackEvent('secure_email_opened', {});
+      trackEvent('email_click', { source: ctaSource });
     });
   });
 
@@ -156,7 +159,7 @@ function initTheme() {
 }
 
 /* ==========================================================================
-   Project Filtering (Tabs)
+   Project Filtering (Tabs supporting space-separated multi-categories)
    ========================================================================== */
 function initProjectFiltering() {
   const filterBtns = document.querySelectorAll('.tab-btn');
@@ -168,10 +171,13 @@ function initProjectFiltering() {
       btn.classList.add('active');
 
       const filter = btn.getAttribute('data-filter');
+      trackEvent('portfolio_filter_click', { filter });
 
       projectCards.forEach(card => {
-        const category = card.getAttribute('data-category');
-        if (filter === 'all' || category === filter) {
+        const rawCats = card.getAttribute('data-categories') || card.getAttribute('data-category') || '';
+        const cats = rawCats.split(/\s+/).filter(Boolean);
+
+        if (filter === 'all' || cats.includes(filter)) {
           card.style.display = 'flex';
           setTimeout(() => {
             card.style.opacity = '1';
@@ -316,15 +322,39 @@ function initFooterYear() {
 }
 
 /* ==========================================================================
-   Analytics / Lead Tracking Stub
+   Analytics & Conversion Tracking
    ========================================================================== */
 function initEventTracking() {
-  const khamsatBtn = document.getElementById('btn-khamsat');
-  if (khamsatBtn) {
-    khamsatBtn.addEventListener('click', () => {
-      trackEvent('khamsat_link_click', {});
+  // Track Page View
+  trackEvent('page_view', {
+    url: window.location.href,
+    referrer: document.referrer || 'direct',
+    screen: `${window.innerWidth}x${window.innerHeight}`
+  });
+
+  // Track Hero Primary CTA
+  const heroWorkBtn = document.getElementById('hero-btn-work');
+  if (heroWorkBtn) {
+    heroWorkBtn.addEventListener('click', () => {
+      trackEvent('hero_work_click', {});
     });
   }
+
+  // Track Khamsat Clicks
+  const khamsatBtns = document.querySelectorAll('a[href*="khamsat.com"]');
+  khamsatBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      trackEvent('khamsat_link_click', { location: btn.id || 'body' });
+    });
+  });
+
+  // Track Equran external channel clicks
+  const equranLinks = document.querySelectorAll('a[href*="youtube.com/@equranme"], a[href*="equran.me"]');
+  equranLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      trackEvent('equran_case_study_external_click', { url: link.href });
+    });
+  });
 }
 
 function trackEvent(name, data = {}) {
@@ -334,9 +364,36 @@ function trackEvent(name, data = {}) {
     ...data
   };
   
+  // 1. In-memory & Console log
+  console.log('[Analytics]:', eventLog);
+
+  // 2. DataLayer integration (Google Tag Manager / Analytics if present)
   if (window.dataLayer) {
     window.dataLayer.push(eventLog);
   }
-  
-  console.log('[Analytics]:', eventLog);
+
+  // 3. Persist recent events in localStorage for audit
+  try {
+    const stored = JSON.parse(localStorage.getItem('quran_portfolio_events') || '[]');
+    stored.push(eventLog);
+    if (stored.length > 100) stored.shift();
+    localStorage.setItem('quran_portfolio_events', JSON.stringify(stored));
+  } catch (err) {
+    // ignore quota error
+  }
 }
+
+// Global helper for DevTools conversion inspection
+window.getConversionReport = function() {
+  try {
+    const events = JSON.parse(localStorage.getItem('quran_portfolio_events') || '[]');
+    const summary = {};
+    events.forEach(e => {
+      summary[e.event] = (summary[e.event] || 0) + 1;
+    });
+    console.table(summary);
+    return summary;
+  } catch (e) {
+    return {};
+  }
+};
