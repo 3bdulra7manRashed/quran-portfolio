@@ -925,6 +925,77 @@ img {
   color: var(--text-muted);
 }
 
+.casestudy-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 1.35rem;
+}
+
+.casestudy-ext-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 1.15rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  transition: all 0.25s ease;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.casestudy-ext-btn.youtube-btn {
+  background: rgba(239, 68, 68, 0.08);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.casestudy-ext-btn.youtube-btn:hover {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(220, 38, 38, 0.3);
+}
+
+[data-theme="dark"] .casestudy-ext-btn.youtube-btn {
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+[data-theme="dark"] .casestudy-ext-btn.youtube-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.casestudy-ext-btn.web-btn {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+}
+
+.casestudy-ext-btn.web-btn:hover {
+  border-color: var(--gold-primary);
+  color: var(--gold-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(176, 137, 39, 0.2);
+}
+
+[data-theme="dark"] .casestudy-ext-btn.web-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .casestudy-ext-btn.web-btn:hover {
+  border-color: var(--gold-primary);
+  color: var(--gold-primary);
+}
+
 .casestudy-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
